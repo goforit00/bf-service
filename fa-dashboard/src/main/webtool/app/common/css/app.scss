@@ -1,0 +1,85 @@
+@import "base";
+
+.query-form {
+    .query-div {
+        display: inline-block;
+    }
+
+    .form-group {
+        margin-right: 5px;
+    }
+
+    .control-label {
+        width: 4em;
+    }
+
+    .form-control {
+        width: 150px;
+    }
+
+    .bootstrap-select-wrapper {
+        margin-right: 1px;
+    }
+
+    &.horizon-form {
+        .judy-form-component {
+            display: block;
+        }
+
+        .form-group {
+            display: block;
+            margin: 0 0 10px 0;
+
+            .form-control {
+                width: calc(100% - 4em - 10px);
+            }
+        }
+
+        .btn-div {
+            display: block;
+            margin: 10px 0 0 0;
+            text-align: center;
+        }
+    }
+
+    @for $w from 2 through 8 {
+        &.w-#{$w}em {
+            .control-label {
+                width: #{$w}em;
+            }
+        }
+
+        &.horizon-form.w-#{$w}em {
+            .control-label {
+                width: #{$w}em;
+            }
+
+            .form-group {
+                .form-control {
+                    width: calc(100% - #{$w}em - 10px);
+                }
+            }
+        }
+    }
+}
+
+.pagination-form {
+    margin-top: 10px;
+    text-align: center;
+
+    .input-group-addon {
+        padding: 0 7.5px 3px;
+        cursor: pointer;
+    }
+
+    .total-count {
+        position: relative;
+        top: -1px;
+    }
+}
+
+%th-td-default {
+    th, td {
+        @include mix-width($mw-measure);
+    }
+}

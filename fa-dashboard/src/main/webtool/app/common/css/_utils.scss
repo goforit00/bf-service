@@ -1,0 +1,169 @@
+/* Variables */
+$base-font-size: 10px !default;
+$base-font-family: "Microsoft YaHei", "Helvetica Neue", Helvetica, sans-serif !default;
+$base-border-color: #d2d6de !default;
+$base-border-style: 1px solid $base-border-color;
+$base-shining-color: rgb(58, 169, 206);
+$beibei-primary-color: #ff4965;
+
+$mw-company: 40px;
+$mw-sku: 150px;
+$mw-sku-name: 300px;
+$mw-warehouse: 120px;
+$mw-category: 65px;
+$mw-brand: 150px;
+$mw-measure: 100px;
+$mw-vendor: 200px;
+$mw-vendor-no: 80px;
+$mw-datetime: 135px;
+$mw-date: 85px;
+
+/* Mixins */
+@mixin border-radius($radius:0) {
+    -webkit-border-radius: $radius;
+    -moz-border-radius: $radius;
+    -ms-border-radius: $radius;
+    border-radius: $radius;
+}
+
+@mixin transform-rotate($value:0) {
+    -webkit-transform: rotate($value);
+    -ms-transform: rotate($value);
+    -o-transform: rotate($value);
+    transform: rotate($value);
+}
+
+@mixin transform-scale($value) {
+    -webkit-transform: scale($value);
+    -ms-transform: scale($value);
+    -o-transform: scale($value);
+    transform: scale($value);
+}
+
+@mixin box-shadow($x: 0, $y: 0, $blur: 1px, $alpha: 1) {
+    $val: $x $y $blur rgba(0, 0, 0, $alpha);
+    -webkit-box-shadow: $val;
+    -moz-box-shadow: $val;
+    box-shadow: $val;
+}
+
+@mixin mix-width($width, $factor: 2) {
+    min-width: $width;
+    width: $width * $factor;
+}
+
+@mixin triangle($color, $border-width) {
+    display: block;
+    width: 0;
+    height: 0;
+    border: solid $color;
+    border-width: $border-width;
+    border-left-color: transparent;
+    border-right-color: transparent;
+}
+
+@mixin th-td-nth-child($no) {
+    th:nth-child(#{$no}), td:nth-child(#{$no}) {
+        @content;
+    }
+}
+
+@mixin th-td-nth-child-list($list) {
+    @each $no in $list {
+        @include th-td-nth-child($no) {
+            @content;
+        }
+    }
+}
+
+@mixin th-td-nth-child-bundle($map) {
+    @each $no, $mw in $map {
+        @include th-td-nth-child($no) {
+            @include mix-width($mw);
+        }
+    }
+}
+
+/* Placeholder Selectors */
+%toggle-column {
+    @include mix-width(30px, 1);
+    text-align: center;
+}
+
+%chart-column {
+    @include mix-width(30px, 1);
+    text-align: center;
+}
+
+%index-column {
+    @include mix-width(52px, 1);
+    text-align: center;
+}
+
+/* Functions */
+@function pxToRem($px) {
+    @return $px / $base-font-size * 1rem;
+}
+
+/* Utilities */
+.v-ctr {
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+}
+
+.h-ctr {
+    margin: 0 auto;
+}
+
+.ta-ctr {
+    text-align: center;
+}
+
+.ta-rgt {
+    text-align: right;
+}
+
+.text-cloak {
+    text-indent: -999em;
+}
+
+.text-ellipsis {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.inline-block {
+    display: inline-block;
+}
+
+.position-relative {
+    position: relative;
+}
+
+.position-absolute {
+    position: absolute;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.color-red {
+    color: red;
+}
+
+$directions: in top, right, bottom, left;
+@each $dir in $directions {
+    .base-#{$dir}-border {
+        border: {
+            #{$dir}: {
+                style: solid;
+                width: 1px;
+                color: $base-border-color;
+            }
+        }
+    }
+}

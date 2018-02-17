@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.goforit.firstapple.common.dao.UuidDao" >
+
+    <resultMap id="UserTokenMap" type="com.goforit.firstapple.common.model.UuidInfo">
+        <id column="id" property="id"/>
+        <result column="uuid" property="uuid"/>
+        <result column="gmt_created" property="gmtCreated"/>
+    </resultMap>
+
+    <sql id="BaseColumn">
+        id,uuid,gmt_created
+    </sql>
+
+    <insert id="create" useGeneratedKeys="true" flushCache="true" keyProperty="id">
+        insert into uuid_info(uuid,gmt_created) VALUES (#{uuid},NOW())
+    </insert>
+
+</mapper>

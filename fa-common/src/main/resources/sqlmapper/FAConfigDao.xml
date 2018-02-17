@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.goforit.firstapple.common.dao.FAConfigDao" >
+
+    <resultMap id="FAConfigInfoMap" type="com.goforit.firstapple.common.model.FAConfigInfo">
+        <id column="id" property="id"/>
+        <result column="config_key" property="key"/>
+        <result column="config_value" property="value"/>
+    </resultMap>
+
+    <sql id="BaseColumn">
+        id,config_key,config_value
+    </sql>
+
+    <select id="getByKey" resultMap="FAConfigInfoMap">
+        SELECT <include refid="BaseColumn"/> FROM  fa_config_info where config_key=#{key}
+    </select>
+
+</mapper>

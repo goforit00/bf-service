@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.goforit.firstapple.common.dao.UserInfoDao" >
+
+    <resultMap id="UserInfoMap" type="com.goforit.firstapple.common.model.UserInfo">
+        <id column="id" property="id"/>
+        <result column="user_nick_name" property="userNickName"/>
+        <result column="password" property="password"/>
+        <result column="email" property="email"/>
+        <result column="phone" property="phone"/>
+        <result column="sex" property="sex"/>
+        <result column="default_address" property="defaultAddress"/>
+        <result column="gmt_created" property="gmtCreated"/>
+        <result column="gmt_modified" property="gmtModified"/>
+    </resultMap>
+
+    <sql id="BaseColumn">
+        id,user_nick_name,password,email,phone,sex,default_address,gmt_created,gmt_modified
+    </sql>
+
+    <insert id="create" keyProperty="id" useGeneratedKeys="true" flushCache="true">
+        insert into user_info(user_nick_name,password,email,phone,sex,default_address,gmt_created,gmt_modified)
+        VALUES (#{userNickName},#{password},#{email},#{phone},#{sex},#{defaultAddress},NOW(),NOW())
+    </insert>
+
+    <update id="updateUser" flushCache="true">
+        update user_info SET
+        email=#{email},
+        phone=#{phone},
+        sex=#{sex},
+        default_address=#{defaultAddress},
+        gmt_modified=NOW()
+        WHERE user_nick_name=#{userNickName}
+    </update>
+
+    <update id="updateModifiedTime" flushCache="true">
+        update user_info SET
+        gmt_modified=NOW()
+        where user_nick_name=#{userNickName}
+    </update>
+
+    <select id="getByName" resultMap="UserInfoMap">
+        SELECT <include refid="BaseColumn"/> FROM  user_info where user_nick_name=#{userNickName}
+    </select>
+
+
+
+</mapper>

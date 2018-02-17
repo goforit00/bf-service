@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.goforit.firstapple.common.dao.SequenceInfoDao" >
+
+    <resultMap id="sequenceMap" type="com.goforit.firstapple.common.model.SequenceInfo">
+        <id property="id" column="id"/>
+        <result property="seqName" column="seq_name"/>
+        <result property="value" column="value"/>
+        <result property="min" column="min"/>
+        <result property="max" column="max"/>
+        <result property="step" column="step"/>
+        <result property="memo" column="memo"/>
+        <result property="gmtCreated" column="gmt_created"/>
+        <result property="gmtModified" column="gmt_modified"/>
+    </resultMap>
+
+    <sql id="BaseColumn">
+        id,seq_name,value,min,max,step,memo,gmt_created,gmt_modified
+    </sql>
+
+    <select id="selectBySeqName" resultMap="sequenceMap">
+        SELECT <include refid="BaseColumn"/> FROM fa_sequence_info
+        WHERE seq_name=#{seqName}
+    </select>
+
+    <update id="updateBySeqNameAndCurValue" flushCache="true">
+        UPDATE fa_sequence_info SET
+        value = #{targetValue}
+        WHERE seq_name = #{seqName} and value=#{curValue}
+    </update>
+</mapper>

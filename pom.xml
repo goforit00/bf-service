@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.goforit.firstapple</groupId>
+    <artifactId>firstapple</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>fa-core-service</module>
+        <module>fa-common</module>
+        <module>fa-dashboard</module>
+        <module>fa-service</module>
+    </modules>
+
+    <properties>
+        <spring.version>4.2.5.RELEASE</spring.version>
+        <javax.servlet-api>3.1.0</javax.servlet-api>
+
+        <!--mvn-->
+        <maven.plugin.install.version>2.5.2</maven.plugin.install.version>
+        <maven.plugin.war.version>2.6</maven.plugin.war.version>
+
+        <druid>1.0.18</druid>
+
+        <!--jersey-->
+        <jersey.version>2.9</jersey.version>
+
+        <!--common-->
+        <commons-lang3>3.4</commons-lang3>
+        <commons-collections4>4.0</commons-collections4>
+        <commons-email>1.3.2</commons-email>
+
+
+        <!--mybatis-->
+        <mybatis-spring>1.2.2</mybatis-spring>
+        <mybatis>3.2.8</mybatis>
+        <mybatis-paginator>1.2.17</mybatis-paginator>
+
+        <!--mysql-->
+        <mysql-connector-java>5.1.38</mysql-connector-java>
+
+        <!--log-->
+        <commons-logging>1.2</commons-logging>
+        <slf4j>1.7.13</slf4j>
+        <log4j>1.2.12</log4j>
+        <raven-log4j>5.0.1</raven-log4j>
+
+        <!--freemarker-->
+        <freemarker>2.3.23</freemarker>
+
+        <apache.httpcore>4.4.5</apache.httpcore>
+        <apache.httpclient>4.5.2</apache.httpclient>
+
+    </properties>
+
+
+    <dependencyManagement>
+        <dependencies>
+
+
+            <!-- spring begin-->
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-jdbc</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-tx</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-aop</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context-support</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-expression</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-web</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-webmvc</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-test</artifactId>
+                <version>${spring.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <!--spring end-->
+
+            <!--servlet begin-->
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>javax.servlet-api</artifactId>
+                <version>${javax.servlet-api}</version>
+            </dependency>
+            <!--servlet end-->
+
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql-connector-java}</version>
+            </dependency>
+
+            <!--db-->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid</artifactId>
+                <version>${druid}</version>
+            </dependency>
+            <!--db end-->
+
+            <!--json begin-->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>1.2.12</version>
+            </dependency>
+            <!--json end-->
+
+            <!--jersey-->
+            <dependency>
+                <groupId>org.glassfish.jersey.ext</groupId>
+                <artifactId>jersey-spring3</artifactId>
+                <version>${jersey.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.springframework</groupId>
+                        <artifactId>spring-core</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.springframework</groupId>
+                        <artifactId>spring-web</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.springframework</groupId>
+                        <artifactId>spring-beans</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.glassfish.jersey.media</groupId>
+                <artifactId>jersey-media-json-jackson</artifactId>
+                <version>${jersey.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.glassfish.jersey.media</groupId>
+                <artifactId>jersey-media-multipart</artifactId>
+                <version>${jersey.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.glassfish.jersey.ext</groupId>
+                <artifactId>jersey-entity-filtering</artifactId>
+                <version>${jersey.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.glassfish.jersey.containers</groupId>
+                <artifactId>jersey-container-servlet</artifactId>
+                <version>${jersey.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.secnod.shiro</groupId>
+                <artifactId>shiro-jersey</artifactId>
+                <version>0.2.0</version>
+            </dependency>
+            <!--jersey end-->
+
+            <!--common-->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-lang3}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-collections4</artifactId>
+                <version>${commons-collections4}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-email</artifactId>
+                <version>${commons-email}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpcore</artifactId>
+                <version>${apache.httpcore}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>${apache.httpclient}</version>
+            </dependency>
+            <!--common end-->
+
+
+            <!--mybatis-->
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis-spring</artifactId>
+                <version>${mybatis-spring}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis</artifactId>
+                <version>${mybatis}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.miemiedev</groupId>
+                <artifactId>mybatis-paginator</artifactId>
+                <version>${mybatis-paginator}</version>
+            </dependency>
+            <!--mybatis end-->
+
+            <!--log-->
+            <dependency>
+                <groupId>commons-logging</groupId>
+                <artifactId>commons-logging</artifactId>
+                <version>${commons-logging}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-log4j12</artifactId>
+                <version>${slf4j}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.kencochrane.raven</groupId>
+                <artifactId>raven-log4j</artifactId>
+                <version>${raven-log4j}</version>
+            </dependency>
+            <!--log end-->
+
+
+            <!--freemarker -->
+            <dependency>
+                <groupId>org.freemarker</groupId>
+                <artifactId>freemarker</artifactId>
+                <version>${freemarker}</version>
+            </dependency>
+            <!--freemarker end-->
+
+            <!--geohash-->
+            <dependency>
+                <groupId>ch.hsr</groupId>
+                <artifactId>geohash</artifactId>
+                <version>1.0.10</version>
+            </dependency>
+            <!--geohash end-->
+
+        </dependencies>
+
+
+
+    </dependencyManagement>
+
+
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+
+    </build>
+
+
+</project>

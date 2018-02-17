@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.goforit.firstapple.common.dao.BfUserReadBookEventDao" >
+
+    <resultMap id="BfUserReadBookEventMap" type="com.goforit.firstapple.common.model.BfUserReadBookEvent">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="book_id" property="bookId"/>
+        <result column="score" property="score"/>
+        <result column="read_begin_time" property="readBeginTime"/>
+        <result column="read_end_time" property="readEndTime"/>
+        <result column="created_time" property="createdTime"/>
+        <result column="updated_time" property="updatedTime"/>
+    </resultMap>
+
+    <sql id="BaseColumn">
+        id,user_id,book_id,score,read_begin_time,read_end_time,created_time,updated_time
+    </sql>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        insert into bf_user_read_book_event(user_id,book_id,score,read_begin_time,read_end_time,
+        created_time,updated_time) VALUES (#{userId},#{bookId},#{score},#{readBeginTime},null,NOW(),NOW())
+    </insert>
+
+    <select id="getUserAroundReadEvent" resultMap="BfUserReadBookEventMap">
+        SELECT <include refid="BaseColumn"/>
+        FROM bf_user_read_book_event WHERE
+        user_id not in (#{userId})
+        ORDER BY id DESC limit 0,10
+    </select>
+
+    <select id="getReadEventByUserId" resultMap="BfUserReadBookEventMap">
+        SELECT <include refid="BaseColumn"/>
+        FROM bf_user_read_book_event WHERE
+        user_id = #{userId}
+        ORDER BY id DESC limit 0,10
+    </select>
+
+</mapper>

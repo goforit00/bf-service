@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://mybatis.org/schema/mybatis-spring"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="com.goforit.firstapple"/>
+
+    <bean name="applicationProperties" class="com.goforit.firstapple.common.utils.PreferredPropertiesFactoryBean">
+        <property name="preferredLocations">
+            <list>
+                <value>classpath:/properties/${domain}.properties</value>
+            </list>
+        </property>
+        <property name="backupLocations">
+            <list>
+                <!--<value>classpath:/properties/${domain}.properties</value>-->
+                <value>classpath:/properties/dev.properties</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="properties" ref="applicationProperties"/>
+    </bean>
+</beans>

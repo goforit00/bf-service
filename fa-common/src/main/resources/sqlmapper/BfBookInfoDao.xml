@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.goforit.firstapple.common.dao.BfBookInfoDao" >
+
+    <resultMap id="BfBookInfoMap" type="com.goforit.firstapple.common.model.BfBookInfo">
+        <id column="id" property="id"/>
+        <result column="book_name" property="bookName"/>
+        <result column="picture_url" property="pictureUrl"/>
+        <result column="category" property="category"/>
+        <result column="author" property="author"/>
+        <result column="score" property="score"/>
+        <result column="created_time" property="createdTime"/>
+        <result column="updated_time" property="updatedTime"/>
+    </resultMap>
+
+    <sql id="BaseColumn">
+        id,book_name,picture_url,category,author,score,created_time,updated_time
+    </sql>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        insert into bf_book_info(book_name,picture_url,category,author,score,created_time,
+        updated_time) VALUES (#{bookName},#{pictureUrl},#{category},#{author},#{score},
+        NOW(),NOW())
+    </insert>
+
+    <select id="getByBookId" resultMap="BfBookInfoMap">
+        SELECT <include refid="BaseColumn"/>
+        FROM  bf_book_info
+        where
+        id = #{id}
+    </select>
+
+    <select id="getByBookNameAndAuthor" resultMap="BfBookInfoMap">
+        SELECT <include refid="BaseColumn"/>
+        FROM bf_book_info
+        WHERE
+        book_name = #{bookName}
+    </select>
+
+</mapper>

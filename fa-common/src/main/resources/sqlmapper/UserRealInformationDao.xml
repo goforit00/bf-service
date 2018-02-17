@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.goforit.firstapple.common.dao.UserRealInformationDao" >
+
+    <resultMap id="UserRealInfoMap" type="com.goforit.firstapple.common.model.UserRealInformation">
+        <id column="id" property="id"/>
+        <result column="user_nick_name" property="userNickName"/>
+        <result column="id_card_num" property="idCardNum"/>
+        <result column="real_name" property="realName"/>
+    </resultMap>
+
+    <sql id="BaseColumn">
+        id,user_nick_name,id_card_num,real_name
+    </sql>
+
+
+    <select id="getByName" resultMap="UserRealInfoMap">
+        SELECT <include refid="BaseColumn"/> from user_real_information where user_nick_name=#{userNickName};
+    </select>
+
+    <insert id="create" keyProperty="id" useGeneratedKeys="true" flushCache="true">
+        insert into user_real_information(user_nick_name,id_card_num,real_name)
+        VALUES (#{userNickName},#{idCardNum},#{realName})
+    </insert>
+
+    <update id="update" flushCache="true">
+        update user_real_information set
+        real_name=#{realName},
+        id_card_num=#{idCardNum}
+        where user_nick_name=#{userNickName}
+    </update>
+
+</mapper>

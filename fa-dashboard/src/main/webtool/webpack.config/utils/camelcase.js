@@ -1,0 +1,1 @@
+module.exports = (input, capitalize) => input.split(/[.-]/).map((item, index) => index || capitalize ? (item[0].toUpperCase() + item.slice(1)) : item).join("");

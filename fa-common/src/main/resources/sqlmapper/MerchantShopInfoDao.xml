@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.goforit.firstapple.common.dao.MerchantShopInfoDao" >
+
+    <resultMap id="merchantShopInfoMap" type="com.goforit.firstapple.common.model.MerchantShopInfo">
+        <id property="id" column="id"/>
+        <result property="shopCode" column="shop_code"/>
+        <result property="shopName" column="shop_name"/>
+        <result property="companyCode" column="company_code"/>
+        <result property="country" column="country"/>
+        <result property="province" column="province"/>
+        <result property="city" column="city"/>
+        <result property="county" column="county"/>
+        <result property="address" column="address"/>
+        <result property="status" column="status"/>
+        <result property="description" column="description"/>
+        <result property="posLongitude" column="pos_longitude" jdbcType="DOUBLE"/>
+        <result property="posLatitude" column="pos_latitude" jdbcType="DOUBLE"/>
+        <result property="geoHash" column="geo_hash"/>
+        <result property="gmtCreated" column="gmt_created"/>
+        <result property="gmtModified" column="gmt_modified"/>
+    </resultMap>
+
+    <sql id="BaseColumn">
+        id,shop_code,shop_name,company_code,country,province,city,county,address,status,description,
+        pos_longitude,pos_latitude,geo_hash,gmt_created,gmt_modified
+    </sql>
+
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" flushCache="true">
+        insert into merchant_shop_info(
+        shop_code,
+        shop_name,
+        company_code,
+        country,
+        province,
+        city,
+        county,
+        address,
+        status,
+        description,
+        pos_longitude,
+        pos_latitude,
+        geo_hash,
+        gmt_created,
+        gmt_modified
+        )
+        VALUES (
+        #{shopCode},
+        #{shopName},
+        #{companyCode},
+        #{country},
+        #{province},
+        #{city},
+        #{county},
+        #{address},
+        #{status},
+        #{description},
+        #{posLongitude},
+        #{posLatitude},
+        #{geoHash},
+        NOW(),
+        NOW()
+        )
+    </insert>
+
+    <update id="updateByShopCode" flushCache="true">
+        UPDATE merchant_shop_info SET
+        <if test="shopName!=null">
+            shop_name=#{shopName},
+        </if>
+        <if test="country!=null">
+            country=#{country},
+        </if>
+        <if test="province!=null">
+            province=#{province},
+        </if>
+        <if test="city!=null">
+            city=#{city},
+        </if>
+        <if test="county!=null">
+            county=#{county},
+        </if>
+        <if test="address!=null">
+            address=#{address},
+        </if>
+        <if test="status!=null">
+            status=#{status},
+        </if>
+        <if test="description!=null">
+            description=#{description},
+        </if>
+        <if test="posLongitude!=null">
+            pos_longitude=#{posLongitude},
+        </if>
+        <if test="posLatitude!=null">
+            pos_latitude=#{posLatitude},
+        </if>
+        <if test="geoHash!=null">
+            geo_hash=#{geoHash},
+        </if>
+
+        gmt_modified=NOW()
+        WHERE shop_code=#{shopCode}
+    </update>
+
+    <select id="findShopsByShopCodes" resultMap="merchantShopInfoMap">
+        SELECT <include refid="BaseColumn"/> FROM merchant_shop_info
+        WHERE shop_code in
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="findByShopCode" resultMap="merchantShopInfoMap">
+        SELECT <include refid="BaseColumn"/> FROM merchant_shop_info
+        WHERE shop_code=#{shopCode}
+    </select>
+</mapper>
