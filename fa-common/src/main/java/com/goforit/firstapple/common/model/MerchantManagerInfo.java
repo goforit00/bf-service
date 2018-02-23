@@ -5,13 +5,14 @@ import com.goforit.firstapple.common.enums.MerchantManagerType;
 import com.goforit.firstapple.common.model.params.MerchantManagerRegisterParams;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * 管理者信息
  * Created by goforit on 17/4/14.
  */
-public class MerchantManagerInfo {
+public class MerchantManagerInfo implements Serializable {
 
     private Long id;
 

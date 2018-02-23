@@ -3,11 +3,12 @@ package com.goforit.firstapple.common.model;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
 import javax.ws.rs.FormParam;
+import java.io.Serializable;
 
 /**
  * Created by goforit on 17/4/10.
  */
-public class UserRealInformation {
+public class UserRealInformation implements Serializable {
 
     /**
      * id

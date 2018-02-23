@@ -10,46 +10,5 @@
        default-autowire="byName" default-lazy-init="false">
 
 
-    <!--<mvc:resources location="/static/" mapping="/static/**"/>-->
-    <!--<context:component-scan base-package="com.beibei.oms.dashboard.controller" />-->
-
-    <!--<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">-->
-        <!--<property name="locations">-->
-            <!--<list>-->
-                <!--<value>classpath:properties/${domain}.properties</value>-->
-            <!--</list>-->
-        <!--</property>-->
-    <!--</bean>-->
-
-    <!--<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">-->
-        <!--<property name="useTrailingSlashMatch" value="false" />-->
-    <!--</bean>-->
-
-    <!--<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">-->
-        <!--<property name="customArgumentResolvers">-->
-            <!--<list>-->
-            <!--</list>-->
-        <!--</property>-->
-        <!--<property name="messageConverters">-->
-            <!--<list>-->
-                <!--<bean class="com.beibei.oms.dashboard.util.web.MyJackson2HttpMessageConverter" />-->
-            <!--</list>-->
-        <!--</property>-->
-        <!--<property name="webBindingInitializer">-->
-            <!--<bean class="org.springframework.web.bind.support.ConfigurableWebBindingInitializer">-->
-                <!--<property name="validator" ref="validator" />-->
-            <!--</bean>-->
-        <!--</property>-->
-    <!--</bean>-->
-
-    <!--<bean name="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">-->
-        <!--<property name="providerClass" value="org.hibernate.validator.HibernateValidator"/>-->
-    <!--</bean>-->
-
-    <!--<bean name="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">-->
-        <!--<property name="defaultEncoding" value="UTF-8" />-->
-        <!--<property name="maxUploadSize" value="10000000"/>-->
-        <!--<property name="maxInMemorySize" value="10000000"/>-->
-    <!--</bean>-->
-
+   
 </beans>

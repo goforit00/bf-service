@@ -1,5 +1,7 @@
 package com.goforit.firstapple.common.model;
 
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+
 import java.io.Serializable;
 
 /**
@@ -61,5 +63,10 @@ public class Response<T> implements Serializable {
 
     public void setData(T data) {
         this.data = data;
+    }
+
+    @Override
+    public String toString() {
+        return ReflectionToStringBuilder.toString(this);
     }
 }

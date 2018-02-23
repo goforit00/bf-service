@@ -1,31 +1,29 @@
 package com.goforit.firstapple.common.integration.client.impl;
 
-import java.io.UnsupportedEncodingException;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
+import com.goforit.firstapple.common.integration.client.MailSenderClient;
+import com.goforit.firstapple.common.integration.model.MailAuth;
+import com.goforit.firstapple.common.integration.model.MailInfo;
+import com.goforit.firstapple.common.integration.model.MailInfoBuilder;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.activation.FileDataSource;
 import javax.mail.*;
 import javax.mail.internet.*;
-
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.goforit.firstapple.common.integration.client.MailSenderClient;
-import com.goforit.firstapple.common.integration.model.MailAuth;
-import com.goforit.firstapple.common.integration.model.MailInfo;
-import com.goforit.firstapple.common.integration.model.MailInfoBuilder;
+import java.io.UnsupportedEncodingException;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 
 /**
  * Created by goforit on 17/4/13.
  */
-public class MailSenderClientImpl implements MailSenderClient{
+public class MailSenderClientImpl implements MailSenderClient {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MailSenderClientImpl.class);
 
@@ -50,10 +48,9 @@ public class MailSenderClientImpl implements MailSenderClient{
     private String defaultPassword;
 
     /**
-     *
+     * 默认发送地址
      */
     private String defaultFromAddress;
-
 
     @Override
     public boolean sendMail(MailInfo mailInfo) {
@@ -62,16 +59,15 @@ public class MailSenderClientImpl implements MailSenderClient{
         // 判断是否需要身份验证
         MailAuth authenticator = null;
         Properties props = mailInfo.getProperties();
-        if(mailInfo.isValidate()){
-            // 如果需要身份认证，则创建一个密码验证器
+        if (mailInfo.isValidate()) {
+            // 创建一个密码验证器
             authenticator = new MailAuth(mailInfo.getUserName(), mailInfo.getPassword());
         }
-        // 根据邮件会话属性和密码验证器构造一个发送邮件的session
-        Session sendMailSession = Session.getDefaultInstance(props, authenticator);
+        // 根据会话属性和密码验证器构造一个发送邮件的 session
+        Session sendSession = Session.getDefaultInstance(props, authenticator);
 
         try {
-            // 根据session创建一个邮件消息
-            Message sendMailMessage = new MimeMessage(sendMailSession);
+            Message sendMailMessage = new MimeMessage(sendSession);
             // 创建邮件发送者地址
             Address from = new InternetAddress(mailInfo.getFromAddress());
             // 设置邮件消息的发送者
@@ -79,7 +75,7 @@ public class MailSenderClientImpl implements MailSenderClient{
 
             // 创建邮件接收者地址
             String[] tos = mailInfo.getToAddress();
-            if(tos != null && tos.length != 0){
+            if (tos != null && tos.length != 0) {
                 InternetAddress[] to = new InternetAddress[tos.length];
                 // 设置邮件消息的发送者
                 for (int i = 0; i < tos.length; i++) {
@@ -92,12 +88,12 @@ public class MailSenderClientImpl implements MailSenderClient{
             String mSubject = StringUtils.isEmpty(mailInfo.getSubject()) ? "" : mailInfo.getSubject();
             sendMailMessage.setSubject(MimeUtility.encodeText(mSubject, "utf-8", "B"));
             // 设置邮件内容
-            //sendMailMessage.setText(mailInfo.getContent());
+            // sendMailMessage.setText(mailInfo.getContent());
             Multipart multipart = new MimeMultipart();
             // 邮件文本内容
-            if(mailInfo.getContent() != null && !"".equals(mailInfo.getContent())){
+            if (mailInfo.getContent() != null && !"".equals(mailInfo.getContent())) {
                 BodyPart part = new MimeBodyPart();
-                part.setContent(mailInfo.getContent(), mailInfo.getContentType());//设置邮件文本内容
+                part.setContent(mailInfo.getContent(), mailInfo.getContentType());// 设置邮件文本内容
                 multipart.addBodyPart(part);
             }
 
@@ -117,32 +113,29 @@ public class MailSenderClientImpl implements MailSenderClient{
             }
 
             sendMailMessage.setContent(multipart);
-            // 设置邮件发送的时间
             sendMailMessage.setSentDate(new Date());
             // 发送邮件
-            //Transport.send(sendMailMessage);
-            Transport transport = sendMailSession.getTransport("smtp");
+            Transport transport = sendSession.getTransport("smtp");
             transport.connect(mailInfo.getUserName(), mailInfo.getPassword());
             Transport.send(sendMailMessage, sendMailMessage.getAllRecipients());
 
-            // 关闭transport
             transport.close();
 
             flag = true;
         } catch (AddressException e) {
-            LOGGER.error("邮件地址信息错误", e);
+            LOGGER.error("邮件地址信息异常:", e);
         } catch (MessagingException e) {
-            LOGGER.error("构造邮件内容失败", e);
+            LOGGER.error("构造邮件内容异常:", e);
         } catch (UnsupportedEncodingException e) {
-            LOGGER.error("不支持的邮件编码", e);
+            LOGGER.error("不支持的邮件编码异常:", e);
         }
 
         return flag;
     }
 
     @Override
-    public boolean sendEmail(String subject, List<String> receiveAddressList, String freeMarkerTemplatePath, Map<String, Object> mailParams) {
-
+    public boolean sendEmail(String subject, List<String> receiveAddressList, String freeMarkerTemplatePath,
+        Map<String, Object> mailParams) {
 
         if (CollectionUtils.isEmpty(receiveAddressList)) {
             LOGGER.warn("收件人列表不能为空:邮件主题={}", subject);
@@ -151,17 +144,16 @@ public class MailSenderClientImpl implements MailSenderClient{
         try {
             String mailContent = FreemarkerUtil.process(freeMarkerTemplatePath, mailParams);
             MailInfo mailInfo = getDefaultHtmlMailInfoBuilder()
-                    .withToAddress(receiveAddressList.toArray(new String[receiveAddressList.size()]))
-                    .withSubject(subject)
-                    .withContent(mailContent)
-                    .build();
+                .withToAddress(receiveAddressList.toArray(new String[receiveAddressList.size()]))
+                .withSubject(subject)
+                .withContent(mailContent)
+                .build();
             return sendMail(mailInfo);
         } catch (Exception e) {
-            LOGGER.warn("发送邮件失败", e);
+            LOGGER.warn("发送邮件异常", e);
             return false;
         }
     }
-
 
     public MailInfoBuilder getDefaultHtmlMailInfoBuilder() {
         MailInfoBuilder builder = getDefaultMailInfoBuilder();
@@ -169,19 +161,16 @@ public class MailSenderClientImpl implements MailSenderClient{
         return builder;
     }
 
-    public  MailInfoBuilder getDefaultMailInfoBuilder() {
+    public MailInfoBuilder getDefaultMailInfoBuilder() {
         return MailInfoBuilder.aMailInfo()
-                .withMailServerHost(defaultServerHost)//"smtp.exmail.qq.com"
-                .withMailServerPort(defaultServerPort)//"25")
-                .withFromAddress(defaultFromAddress)//"info.biz@yunejian.com")
-                .withUserName(defaultAccount)//"info.biz@yunejian.com")
-                .withPassword(defaultPassword)//"passwd")
-                .withContentType("text/plain;charset=utf-8")
-                .withValidate(true);
+            .withMailServerHost(defaultServerHost)
+            .withMailServerPort(defaultServerPort)
+            .withFromAddress(defaultFromAddress)
+            .withUserName(defaultAccount)
+            .withPassword(defaultPassword)
+            .withContentType("text/plain;charset=utf-8")
+            .withValidate(true);
     }
-
-
-
 
     public String getDefaultServerHost() {
         return defaultServerHost;

@@ -13,7 +13,7 @@ import java.util.Properties;
  * Created by goforit on 17/3/31.
  */
 public class PreferredPropertiesFactoryBean extends PropertiesLoaderSupport
-        implements FactoryBean<Properties>, InitializingBean {
+    implements FactoryBean<Properties>, InitializingBean {
 
     private boolean singleton = true;
     private Properties singletonInstance;
@@ -22,7 +22,8 @@ public class PreferredPropertiesFactoryBean extends PropertiesLoaderSupport
 
     private Resource[] backupLocations;
 
-    public PreferredPropertiesFactoryBean() {}
+    public PreferredPropertiesFactoryBean() {
+    }
 
     public final void setSingleton(boolean singleton) {
         this.singleton = singleton;
@@ -34,7 +35,7 @@ public class PreferredPropertiesFactoryBean extends PropertiesLoaderSupport
 
     public final void afterPropertiesSet() throws IOException {
         boolean preferredAvailable = true;
-        if(ArrayUtils.isEmpty(preferredLocations)) {
+        if (ArrayUtils.isEmpty(preferredLocations)) {
             preferredAvailable = false;
         } else {
             for (Resource res : preferredLocations) {
@@ -44,7 +45,7 @@ public class PreferredPropertiesFactoryBean extends PropertiesLoaderSupport
                 }
             }
         }
-        if(preferredAvailable) {
+        if (preferredAvailable) {
             setLocations(preferredLocations);
         } else {
             setLocations(backupLocations);
@@ -68,16 +69,18 @@ public class PreferredPropertiesFactoryBean extends PropertiesLoaderSupport
     }
 
     /**
-     * 首选的配置，如果首选配置文件任何一个不存在，则使用备用的。
-     * @param preferredLocations 首选的配置
+     * 首选配置
+     * 
+     * @param preferredLocations
      */
     public void setPreferredLocations(Resource[] preferredLocations) {
         this.preferredLocations = preferredLocations;
     }
 
     /**
-     * 设置备用的配置，如果首选配置文件任何一个不存在，则使用备用的。
-     * @param backupLocations 备用的配置
+     * 备用配置
+     * 
+     * @param backupLocations
      */
     public void setBackupLocations(Resource[] backupLocations) {
         this.backupLocations = backupLocations;

@@ -2,6 +2,7 @@ package com.goforit.firstapple.common.model;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -9,7 +10,7 @@ import java.util.Date;
  *
  * Created by goforit on 18/2/4.
  */
-public class BfUserSuggest {
+public class BfUserSuggest implements Serializable {
 
     private Long id;
 
