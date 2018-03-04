@@ -1,5 +1,6 @@
 package com.goforit.firstapple.core.service;
 
+import com.goforit.firstapple.common.model.BfReadBookProgressRecord;
 import com.goforit.firstapple.common.model.BfUserReadBookEvent;
 
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.List;
 public interface BfUserReadBookService {
 
     /**
-     * 发现某个用的读书事件
+     * 发现某个用户的读书事件
      *
      * @param userId
      * @return
@@ -28,11 +29,35 @@ public interface BfUserReadBookService {
      */
     List<BfUserReadBookEvent> findUserAroundReadEvent(Long userId);
 
-
     /**
      * 发布读书事件
      *
      * @param bfUserReadBookEvent
      */
     void  publishBookEvent(BfUserReadBookEvent bfUserReadBookEvent);
+
+    /**
+     * 查询读书进度通过读书事件id
+     *
+     * @param eventId
+     * @return
+     */
+    List<BfReadBookProgressRecord> findBookProgressByReadEventId(Long eventId);
+
+    /**
+     * 是否存在 读书事件
+     *
+     * @param userId
+     * @param eventId
+     * @return
+     */
+    boolean existReadBookEvent(Long userId,Long eventId);
+
+    /**
+     * 发布读书进度
+     *
+     * @param progressRecord
+     * @return
+     */
+    BfReadBookProgressRecord publishBookProgress(BfReadBookProgressRecord progressRecord);
 }

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.goforit.firstapple.common.dao.BfReadBookProgressRecordDao" >
+
+    <resultMap id="BfReadBookProgressRecordMap" type="com.goforit.firstapple.common.model.BfReadBookProgressRecord">
+        <id column="id" property="id"/>
+        <result column="book_event_id" property="bookEventId"/>
+        <result column="read_progress" property="readProgress"/>
+        <result column="user_note" property="userNote"/>
+        <result column="created_time" property="createdTime"/>
+        <result column="updated_time" property="updatedTime"/>
+    </resultMap>
+
+    <sql id="BaseColumn">
+        id,book_event_id,read_progress,user_note,created_time,updated_time
+    </sql>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        insert into bf_read_book_progress_record(book_event_id,read_progress,user_note,created_time,
+        updated_time) VALUES (#{bookEventId},#{readProgress},#{userNote},NOW(),NOW())
+    </insert>
+
+    <select id="findByReadEventId" resultMap="BfReadBookProgressRecordMap">
+        SELECT <include refid="BaseColumn"/>
+        FROM  bf_read_book_progress_record
+        where
+        book_event_id = #{eventId}
+    </select>
+
+    <select id="findById" resultMap="BfReadBookProgressRecordMap">
+        SELECT <include refid="BaseColumn"/>
+        FROM bf_read_book_progress_record
+        WHERE
+        id = #{progressId}
+    </select>
+
+</mapper>
