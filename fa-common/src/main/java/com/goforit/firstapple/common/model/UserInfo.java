@@ -4,12 +4,13 @@ import com.goforit.firstapple.common.model.params.UserRegisterParams;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
 import javax.ws.rs.FormParam;
+import java.io.Serializable;
 import java.sql.Date;
 
 /**
  * Created by goforit on 17/3/30.
  */
-public class UserInfo {
+public class UserInfo implements Serializable {
 
     /**
      * id

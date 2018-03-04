@@ -1,5 +1,7 @@
 package com.goforit.firstapple.common.integration.model;
 
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+
 import java.util.Properties;
 
 /**
@@ -164,5 +166,10 @@ public class MailInfo {
 
     public void setContentType(String contentType) {
         this.contentType = contentType;
+    }
+
+    @Override
+    public String toString() {
+        return ReflectionToStringBuilder.toString(this);
     }
 }

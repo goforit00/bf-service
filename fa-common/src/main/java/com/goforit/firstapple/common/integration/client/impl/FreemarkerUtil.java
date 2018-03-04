@@ -14,18 +14,18 @@ import java.io.Writer;
  */
 public class FreemarkerUtil {
 
-    private final static Configuration cfg;
+    private final static Configuration configuration;
 
     static {
-        cfg = new Configuration(Configuration.VERSION_2_3_22);
-        cfg.setClassForTemplateLoading(FreemarkerUtil.class, "/ftl");
-        cfg.setClassicCompatible(true);
-        cfg.setDefaultEncoding("UTF-8");
-        cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
+        configuration = new Configuration(Configuration.VERSION_2_3_22);
+        configuration.setClassForTemplateLoading(FreemarkerUtil.class, "/ftl");
+        configuration.setClassicCompatible(true);
+        configuration.setDefaultEncoding("UTF-8");
+        configuration.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
     }
 
     public static String process(String templateName, Object dataModel) throws IOException, TemplateException {
-        Template template = cfg.getTemplate(templateName);
+        Template template = configuration.getTemplate(templateName);
         Writer writer = new StringWriter();
         template.process(dataModel, writer);
         writer.flush();

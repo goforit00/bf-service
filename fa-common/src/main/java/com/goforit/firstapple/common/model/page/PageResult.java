@@ -1,5 +1,7 @@
 package com.goforit.firstapple.common.model.page;
 
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -59,5 +61,10 @@ public class PageResult<T extends Serializable> implements Serializable {
 
     public List<T> getList() {
         return list;
+    }
+
+    @Override
+    public String toString() {
+        return ReflectionToStringBuilder.toString(this);
     }
 }

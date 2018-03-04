@@ -6,13 +6,14 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
 import javax.ws.rs.FormParam;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * 店铺信息
  * Created by goforit on 17/4/18.
  */
-public class MerchantShopInfo {
+public class MerchantShopInfo implements Serializable {
 
     private Long id;
 

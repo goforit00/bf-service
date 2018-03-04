@@ -2,13 +2,14 @@ package com.goforit.firstapple.common.model;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * 用户阅读书本事件
  * Created by goforit on 18/2/4.
  */
-public class BfUserReadBookEvent {
+public class BfUserReadBookEvent implements Serializable {
 
     private Long id;
 

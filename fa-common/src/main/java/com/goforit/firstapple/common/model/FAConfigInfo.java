@@ -2,12 +2,13 @@ package com.goforit.firstapple.common.model;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by goforit on 17/4/4.
  */
-public class FAConfigInfo {
+public class FAConfigInfo implements Serializable {
 
     private Long id;
 

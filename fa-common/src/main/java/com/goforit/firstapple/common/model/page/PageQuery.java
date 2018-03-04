@@ -1,5 +1,6 @@
 package com.goforit.firstapple.common.model.page;
 
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.springframework.util.Assert;
 
 import java.io.Serializable;
@@ -43,5 +44,10 @@ public class PageQuery implements Serializable {
 
     public int getOffset() {
         return offset;
+    }
+
+    @Override
+    public String toString() {
+        return ReflectionToStringBuilder.toString(this);
     }
 }
