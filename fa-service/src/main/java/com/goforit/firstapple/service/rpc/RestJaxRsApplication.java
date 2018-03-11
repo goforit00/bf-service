@@ -3,6 +3,7 @@ package com.goforit.firstapple.service.rpc;
 import org.glassfish.jersey.server.ResourceConfig;
 
 import com.goforit.firstapple.service.rest.bf.BfUserReadBookEventRest;
+import com.goforit.firstapple.service.rest.bf.BfUserReadBookProgressRest;
 import com.goforit.firstapple.service.rest.bf.BfWeiXinUserRest;
 
 /**
@@ -17,6 +18,7 @@ public class RestJaxRsApplication extends ResourceConfig {
         register(HelloWorldRpcImpl.class);
         register(BfWeiXinUserRest.class);
         register(BfUserReadBookEventRest.class);
+        register(BfUserReadBookProgressRest.class);
 
     }
 }

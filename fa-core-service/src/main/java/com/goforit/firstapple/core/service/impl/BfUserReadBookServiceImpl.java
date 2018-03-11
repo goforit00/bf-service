@@ -1,9 +1,11 @@
 package com.goforit.firstapple.core.service.impl;
 
 import com.goforit.firstapple.common.dao.BfBookInfoDao;
+import com.goforit.firstapple.common.dao.BfReadBookProgressRecordDao;
 import com.goforit.firstapple.common.dao.BfUserReadBookEventDao;
 import com.goforit.firstapple.common.dao.BfWeiXinUserInfoDao;
 import com.goforit.firstapple.common.model.BfBookInfo;
+import com.goforit.firstapple.common.model.BfReadBookProgressRecord;
 import com.goforit.firstapple.common.model.BfUserReadBookEvent;
 import com.goforit.firstapple.common.model.BfWeiXinUserInfo;
 import com.goforit.firstapple.common.utils.DateTimeUtils;
@@ -32,6 +34,9 @@ public class BfUserReadBookServiceImpl implements BfUserReadBookService {
 
     @Autowired
     private BfWeiXinUserInfoDao bfWeiXinUserInfoDao;
+
+    @Autowired
+    private BfReadBookProgressRecordDao bfReadBookProgressRecordDao;
 
     //~~~~~~ public method ~~~~~~
     @Override
@@ -82,6 +87,32 @@ public class BfUserReadBookServiceImpl implements BfUserReadBookService {
         }
 
         bfUserReadBookEventDao.insert(bfUserReadBookEvent);
+
+    }
+
+    @Override
+    public List<BfReadBookProgressRecord> findBookProgressByReadEventId(Long eventId) {
+
+        return bfReadBookProgressRecordDao.findByReadEventId(eventId);
+
+    }
+
+    @Override
+    public boolean existReadBookEvent(Long userId, Long eventId) {
+
+        List<BfUserReadBookEvent> events=bfUserReadBookEventDao.getReadEventByUserId(userId);
+
+        return events.stream().anyMatch((e)->e.getUserId().equals(userId));
+
+    }
+
+    @Override
+    public BfReadBookProgressRecord publishBookProgress(BfReadBookProgressRecord progressRecord) {
+
+        //TODO 检查读书进度百分比是否递增
+        bfReadBookProgressRecordDao.insert(progressRecord);
+
+        return bfReadBookProgressRecordDao.findById(progressRecord.getId());
 
     }
 
